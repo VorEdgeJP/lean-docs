@@ -28,7 +28,7 @@
 リポジトリをそのまま Claude Code のスキルのディレクトリに配置してください。
 
 ```bash
-git clone <このリポジトリの URL> ~/.claude/skills/lean-docs
+git clone https://github.com/VorEdgeJP/lean-docs.git ~/.claude/skills/lean-docs
 ```
 
 プロジェクト単位で使う場合は、`<プロジェクト>/.claude/skills/lean-docs` に配置してください。
@@ -40,4 +40,4 @@ git clone <このリポジトリの URL> ~/.claude/skills/lean-docs
 
 ## ライセンス
 
-未定です。
+[MIT License](LICENSE) で公開しています。
