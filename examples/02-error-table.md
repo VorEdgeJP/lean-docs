@@ -1,28 +1,28 @@
-# 例 2: エラー一覧の対処を具体的にする
+# Example 2: making the remedies in an error list specific
 
-架空の SaaS「Acme Forms」の、連携の失敗理由の一覧。
-**一覧そのものは残す**例。画面には失敗した 1 件の理由しか出ないため、全体の一覧はドキュメントが唯一の情報源になる。
+A list of reasons an integration can fail, from the fictional SaaS "Acme Forms".
+This is an example where **the list itself stays**. The screen only shows the reason for the one failure that occurred, so the documentation is the only source for the full list.
 
 ## Before
 
-| 理由 | 対処 | ボタン |
+| Reason | Remedy | Button |
 | --- | --- | --- |
-| API キーが無効です | キーを再入力します | 「キーを再入力」 |
-| 送信数の上限に達しました | 制限が解除されるまで待ちます | 「24 時間後に再試行」(表示のみ) |
-| 連携先で認証が拒否されました | 連携先の設定を確認します | 「サポートに問い合わせる」 |
-| 内部エラー | 対応が必要な問題です | 「サポートに問い合わせる」 |
+| The API key is invalid | Re-enter the key | "Re-enter key" |
+| The sending limit has been reached | Wait for the limit to lift | "Retry in 24 hours" (display only) |
+| The integration rejected authentication | Check the integration's settings | "Contact support" |
+| Internal error | This problem requires attention | "Contact support" |
 
 ## After
 
-| 理由 | 対処 |
+| Reason | Remedy |
 | --- | --- |
-| API キーが無効です | 連携先の管理画面でキーを再発行し、「キーを再入力」から貼り付けてください。再発行すると以前のキーは使えなくなります。 |
-| 送信数の上限に達しました | 連携先による制限です。解除まで最大 1 日程度お待ちください。こちらでは解決できません。解除後は自動で再試行します。 |
-| 連携先で認証が拒否されました | 連携先の管理画面で、Acme Forms への権限が有効になっているかをご確認ください。Acme Forms 側の設定だけでは有効になりません。 |
-| 内部エラー | Acme Forms 側の不具合です。お客様側での対処はできませんので、サポートまでお問い合わせください。 |
+| The API key is invalid | Reissue the key in the integration's admin console, then paste it via "Re-enter key". Reissuing invalidates the previous key. |
+| The sending limit has been reached | This limit is imposed by the integration. Please wait up to about a day for it to lift. We cannot resolve this on our side. Sending retries automatically once the limit lifts. |
+| The integration rejected authentication | In the integration's admin console, check that access for Acme Forms is enabled. Changing settings in Acme Forms alone will not enable it. |
+| Internal error | This is a problem on the Acme Forms side. There is nothing you can do to fix it; please contact support. |
 
-## 何を変えたか
+## What changed
 
-- **「ボタン」列を消した** — 画面の文言の転記で、ボタンは画面に出ている。必要なボタン名は対処の文中に含めた
-- **対処を「誰が解決できるか」まで書いた** — 利用者が直せる / 待てば直る / 運営の対応が要る、の 3 通りが読み分けられる
-- **一覧は消さなかった** — 画面が見せるのは単票。全体の一覧は「どんな失敗があり、どれが自分で直せるのか」を知る唯一の場所
+- **Removed the "Button" column** — it copied text from the screen, where the buttons are already shown. Button names that matter now appear inside the remedy text
+- **Each remedy says who can fix it** — readers can tell apart the three cases: they can fix it, it resolves by waiting, or the operator must act
+- **Kept the list** — the screen shows single cases. The full list is the only place to learn "what failures exist, and which can I fix myself?"

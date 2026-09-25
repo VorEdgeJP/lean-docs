@@ -1,69 +1,69 @@
-# 例 1: 設定画面のページ
+# Example 1: a settings page
 
-架空の SaaS「Acme Forms」(フォーム作成サービス) の、環境設定ページを削ぐ例。
+Trimming the preferences page of a fictional SaaS, "Acme Forms" (a form builder).
 
-## Before (61 行)
+## Before
 
 ```md
-## 環境設定タブを開く
+## Open the Preferences tab
 
 <Steps>
-### 設定画面を開く
-画面右上のアイコンをクリックし、「設定」を選びます。
-### 「環境設定」タブを選ぶ
-上部のタブから「環境設定」をクリックします。環境設定の画面が表示されます。
+### Open Settings
+Click the icon in the top-right corner and choose "Settings".
+### Select the "Preferences" tab
+Click "Preferences" in the tabs at the top. The Preferences screen appears.
 </Steps>
 
-## サイドバーの幅
+## Sidebar width
 
-サイドバーの幅は境界をドラッグして調整できます。既定は 260 ピクセルで、
-180〜600 ピクセルの範囲で変えられます。180 ピクセルより狭くすると閉じます。
+You can adjust the sidebar width by dragging its edge. The default is 260 pixels,
+and it can range from 180 to 600 pixels. Making it narrower than 180 pixels closes it.
 
-## 通知設定
+## Notification settings
 
-| 項目 | 説明 |
+| Item | Description |
 | --- | --- |
-| 「通知を受け取る」 | 通知を受け取るかどうかを切り替えます。 |
-| 「メールで通知」 | メールで通知を受け取ります。 |
+| "Receive notifications" | Toggles whether you receive notifications. |
+| "Notify by email" | Sends notifications by email. |
 
-「通知を受け取る」をオフにすると、通知が届かなくなります。
-ただし、請求に関するメールはこの設定に関わらず届きます。
+Turning off "Receive notifications" stops notifications from arriving.
+However, billing emails are sent regardless of this setting.
 
-## 変更を保存する
+## Save your changes
 
-設定を変更すると、画面下部に「未保存の変更があります」と表示されます。
-「保存」をクリックすると変更が保存され、「設定を保存しました」と表示されます。
-保存せずにページを離れると、変更は失われます。
+When you change a setting, "You have unsaved changes" appears at the bottom of the screen.
+Click "Save" to save your changes, and "Settings saved" is shown.
+If you leave the page without saving, your changes are lost.
 ```
 
-## After (14 行)
+## After
 
 ```md
-環境設定はアカウントに保存され、別の端末でログインしても引き継がれます。
+Preferences are stored in your account and carry over when you sign in on another device.
 
-## 通知
+## Notifications
 
-「通知を受け取る」をオフにしても、**請求に関するメールは届きます**。
+Even with "Receive notifications" turned off, **billing emails are still sent**.
 
-## 変更の保存
+## Saving changes
 
 <Callout type="warning">
-保存せずにページを離れると、変更は失われます。
+If you leave the page without saving, your changes are lost.
 </Callout>
 ```
 
-## 何を、なぜ消したか
+## What was deleted, and why
 
-| 消したもの | 判定 |
+| Deleted | Reason |
 | --- | --- |
-| 「環境設定タブを開く」の手順 | 製品自身の UI をなぞる手順。画面を見れば分かる |
-| サイドバーの幅 | **足切り**。画面には出ない仕様だが、知らなくても誰も損をしない |
-| 通知設定の表 | 同語反復(「通知を受け取る｜通知を受け取るかどうかを切り替えます」) |
-| 「オフにすると届かなくなる」 | 同語反復 |
-| 保存時のトースト文言 | 画面描写 |
+| Steps to open the Preferences tab | Traces the product's own UI; obvious from the screen |
+| Sidebar width | **The cutoff.** Never shown on screen, but nobody loses anything by not knowing it |
+| Notification settings table | Tautology ("Receive notifications — toggles whether you receive notifications") |
+| "Turning it off stops notifications" | Tautology |
+| Toast text on save | Describing the screen |
 
-| 残したもの | 判定 |
+| Kept | Reason |
 | --- | --- |
-| 設定がアカウントに保存される | 画面に一度も現れない |
-| 請求メールはオフでも届く | 「A をしても B は起きない」型。期待とのズレ |
-| 保存せずに離れると失われる | 誤解のコストが高い |
+| Settings are stored in the account | Never appears on screen |
+| Billing emails arrive even when off | "Doing A does not cause B" — a gap from expectations |
+| Leaving without saving loses changes | A misunderstanding is costly |

@@ -1,126 +1,126 @@
 ---
 name: lean-docs
-description: 製品ドキュメントから、読者が画面を触れば学べる記述を削ぎ落とす。ページの書き直し・冗長性の監査・新規ページの執筆時に使う。「説明が多すぎる」「手順書ばかり」「同じことが何度も書いてある」と感じたとき。
+description: Trims product documentation down to what readers cannot learn by using the UI. Use when rewriting pages, auditing docs for redundancy, or writing new pages — especially when docs feel over-explained, read like click-by-click manuals, or repeat the same fact in several places.
 ---
 
-# ドキュメントを削ぐ
+# Lean docs
 
-## 原則
+## Principle
 
-**読者が 2〜3 回操作すれば学べることは書かない。**
+**Do not document what a reader can learn after using the UI two or three times.**
 
-ドキュメントの仕事は、画面の代弁ではない。画面が黙っていることだけを引き受ける。
+Documentation is not a narration of the screen. It covers only what the screen leaves unsaid.
 
-## 判定の階段
+## The decision ladder
 
-### 足切り: 知らずに損をするか
+### The cutoff: does not knowing it cost the reader anything?
 
-まず全体に問う。**知らなくても損をしないなら、正しくても書かない。**
+Ask this of everything first. **If readers lose nothing by not knowing it, leave it out — even if it is accurate.**
 
-これは以下のどの条件よりも優先する。画面に一度も現れない仕様であっても、知らずに困らないなら不要。
+This takes priority over every condition below. Even a behavior that never appears on screen is unnecessary if nobody is hurt by not knowing it.
 
-> 反例: 「サイドバーの幅は既定 250px で、150〜640px の範囲。150px より狭くドラッグすると閉じ、掴んで離すとクリック扱いで閉じる」
-> — ドラッグの挙動は画面に出ないが、知らなくても誰も困らない。節ごと削除。
+> Counterexample: "The sidebar defaults to 250px and can be resized between 150px and 640px. Dragging it narrower than 150px closes it, and grabbing and releasing it counts as a click and closes it."
+> — The drag behavior never shows on screen, but nobody is worse off for not knowing it. Delete the whole section.
 
-「詳しすぎる仕様」は、たいていここで落ちる。ピクセル値、内部の保存先、表示条件の分岐、一時的な記憶の有効期間。
+"Overly detailed specs" usually fail here: pixel values, where settings are stored internally, branching display conditions, how long temporary state is remembered.
 
-### 残す 3 条件
+### Three reasons to keep something
 
-足切りを通ったものに、上から順に問う。どれかで「はい」なら残す。
+For whatever passes the cutoff, ask these in order. Keep it if any answer is yes.
 
-1. **画面に一度も現れないか** — キーボードショートカット、集計期間の起算日、内部の優先順位。使っていても永久に気づけない。
-2. **誤解のコストが高いか** — 「適用」しても保存されない、削除が不可逆、課金に関わる。間違えると損をする。
-3. **参照データか** — プラン別の上限、エラー理由の一覧、権限の一覧。覚えるものではなく引くもの。
+1. **Does it never appear on screen?** — Keyboard shortcuts, the start date of a billing period, internal precedence rules. Users can work with the product forever and never notice them.
+2. **Is a misunderstanding costly?** — "Apply" does not save, a deletion is irreversible, something affects billing. Getting it wrong costs the reader.
+3. **Is it reference data?** — Per-plan limits, lists of error reasons, lists of permissions. Things readers look up rather than memorize.
 
-残りは消す。「正しいが、書く必要がない」が最も多い。
+Delete everything else. "Correct, but doesn't need to be written" is the most common case.
 
-### 8 割テスト
+### The 80% test
 
-判断に迷ったら「この製品の利用者の 8 割は、これを知らなくても使いこなせるか」を問う。
-使いこなせるなら消す。正確さは残す理由にならない。
+When in doubt, ask: "Could 80% of this product's users use it fully without knowing this?"
+If yes, delete it. Accuracy is not a reason to keep something.
 
-### 参照データの判定 — 画面が出すのは全体か単票か
+### Judging reference data: does the screen show the whole set or a single case?
 
-「画面に出るから不要」と判断する前に、**画面が見せているのが全体か、そのとき起きた 1 件か**を確かめる。
+Before deciding "it's on screen, so it's unnecessary," check **whether the screen shows the whole set, or just the one case that happened**.
 
-> 反例: 起動失敗の理由 11 種の一覧。画面には失敗した 1 件の理由と対処が出る。
-> だが利用者が知りたい「どんな失敗があり、どれが自分で直せるのか」は画面からは決して得られない。
-> 単票しか出ない画面に対する一覧は、ドキュメントが唯一の情報源になる。
+> Counterexample: a list of 11 reasons a bot can fail to start. The screen shows the reason and remedy for the one failure that occurred.
+> But what users want to know — "what failures exist, and which can I fix myself?" — can never be learned from the screen.
+> When a screen only ever shows single cases, the documentation is the only source for the full list.
 
-同型の誤判定は、権限の一覧・エラーコード表・プラン別の上限でも起きる。
+The same misjudgment happens with permission lists, error code tables, and per-plan limits.
 
-### 参照データの書き方 — 対処は具体的に
+### Writing reference data: make remedies specific
 
-一覧を残すなら、各行の「対処」は読者が次に何をすればいいか分かる形にする。
-特に **誰が解決できるのか** を書く。
+If you keep a list, write each row's remedy so readers know what to do next.
+In particular, state **who can fix it**.
 
-| 型 | 書き方の例 |
+| Type | Example wording |
 | --- | --- |
-| 利用者が直せる | 「管理画面の『API キー』で再発行し、『キーを再入力』から貼り付けてください」 |
-| 待てば直る | 「提供元による制限です。解除まで最大 1 日程度お待ちください。こちらでは解決できません」 |
-| 運営の対応が要る | 「こちら側の不具合です。お客様側での対処はできませんので、サポートまでお問い合わせください」 |
+| The user can fix it | "Reissue the key under 'API keys' in the admin console, then paste it via 'Re-enter key'." |
+| It resolves by waiting | "This limit is imposed by the provider. Please wait up to about a day for it to lift. We cannot resolve this on our side." |
+| Needs action from the operator | "This is a problem on our side. There is nothing you can do to fix it; please contact support." |
 
-「対処: 再試行します」「対処: サポートへ」のような一言は、読者を助けない。
-画面のボタン名を並べるだけの列も要らない(ボタンは画面に出ている)。
+One-word remedies like "Remedy: retry" or "Remedy: contact support" don't help readers.
+A column that only lists the screen's button names isn't needed either (the buttons are on the screen).
 
-## 消す対象
+## What to delete
 
-| 種別 | 例 |
+| Kind | Example |
 | --- | --- |
-| 同じ事実の反復 | 本文 → 表 → Steps → Callout → まとめ で 4 周する構造 |
-| ページ間の重複 | 参照先ページがあるのに、その内容を全文再掲している |
-| 画面描写 | トースト・空状態・プレースホルダ・バッジの色・要素の配置・ローディング表示 |
-| 同語反復 | 「『保存』をクリックすると保存されます」「『モジュール』: モジュールで絞り込みます」 |
-| 空回りの手順 | 「◯◯画面を開く」ために「サイドバーの『◯◯』を押す」ステップ |
-| 前置き | 「このページでは〜を説明します」「上から順に次の項目が表示されます」 |
-| Callout 乱用 | 当たり前の内容を囲む。本当の警告が埋もれる |
-| 実装詳細 | 内部 URL パス、クエリパラメータ、内部用語、レート制御の秒数 |
-| 過剰な仕様 | ピクセル値の範囲、設定値の保存先、表示条件の細かな分岐、一時保存の有効期間 |
-| 網羅の過剰 | ラベルの言い換えにしかならない行を、表で全件並べる |
+| Repeating the same fact | Structures that cover it four times: body → table → steps → callout → summary |
+| Duplication across pages | Restating a whole page's content when a link to that page would do |
+| Describing the screen | Toasts, empty states, placeholders, badge colors, element layout, loading indicators |
+| Tautologies | "Click 'Save' to save." "'Module': filters by module." |
+| Idle steps | A "click 'X' in the sidebar" step whose only purpose is to "open the X screen" |
+| Preambles | "This page explains…", "The following items are shown from top to bottom" |
+| Callout overuse | Boxing obvious content, which buries the real warnings |
+| Implementation details | Internal URL paths, query parameters, internal jargon, rate-limit intervals in seconds |
+| Excessive specs | Pixel ranges, where settings are stored, fine-grained display conditions, expiry of temporary state |
+| Exhaustive listings | Tables that list every item when each row just restates its label |
 
-## 手順
+## Procedure
 
-1. **ページ間の重複を先に潰す** — 行単位の推敲より効果が大きい。同じ事実が別ページにあるなら、こちらはリンク 1 本にする。
-2. **節ごと落とす** — 文を削るより、節を消すほうが速く正しい。
-3. **残った文に階段を当てる** — 1 文ずつ。
-4. **構成を組み替える** — 「開く → 操作する → 保存する」の操作順をやめ、仕様ごとの並びにする。手順書ではなく参照ページとして読める形に。
-5. **欠落を足す** — 冗長を削ると、その画面固有の情報が書かれていないことが露わになる。ここで足す。
+1. **Eliminate cross-page duplication first** — it pays off more than line-level editing. If the same fact lives on another page, replace it here with a single link.
+2. **Drop whole sections** — deleting sections is faster and more accurate than trimming sentences.
+3. **Run the ladder on what remains** — one sentence at a time.
+4. **Restructure** — abandon the "open → operate → save" order of operations and organize by behavior, so the page reads as a reference rather than a manual.
+5. **Fill the gaps** — cutting the redundancy exposes information specific to the screen that was never written down. Add it now.
 
-削減率は結果であって目標ではない。ただし目安として、既存の製品ドキュメントは 5〜8 割減ることが多い。
+The reduction rate is a result, not a goal. As a rough guide, existing product docs often shrink by 50–80%.
 
-## 1 事実 1 箇所
+## One fact, one place
 
-同じ事実は 1 ページ内・1 サイト内で 1 箇所にだけ書き、他からは見出しリンクで参照する。
+Write each fact in exactly one place per page and per site, and link to its heading from everywhere else.
 
-重複は分量の問題ではなく、**片方が古くなる**ことが問題。実例として、同じ権限判定の順序を 2 ページに書いた結果、片方からステップが 1 つ欠落していた事故がある。
+Duplication is not a length problem; the problem is that **one copy goes stale**. In one real case, the same permission-evaluation order was written on two pages, and one of them ended up missing a step.
 
-## 残す価値のあるものの見分け方
+## What is worth keeping
 
-消しすぎを恐れる必要はないが、次は消さない。
+There is no need to fear cutting too much, but do not delete these:
 
-- 不可逆な操作の警告
-- 「A をしても B は起きない」型の記述(期待とのズレ)
-- 存在に気づけない機能の告知(手順ではなく、機能があること自体)
-- 数値の上限・対応表・起算日
-- 単票しか出ない画面に対する一覧(前述)
+- Warnings about irreversible actions
+- "Doing A does not cause B" statements (gaps between expectation and behavior)
+- Announcements of features users would never discover (the fact that the feature exists, not how to use it)
+- Numeric limits, lookup tables, start dates
+- Full lists for screens that only show single cases (see above)
 
-## 例外: オンボーディング
+## Exception: onboarding
 
-入門・セットアップの章では「触れば学べる」が成立しない。読者はまだ画面に到達していない。
-ただし、ゆるめるのは次の 1 点だけに限る。
+In getting-started and setup chapters, "learn by using it" doesn't hold: readers haven't reached the screen yet.
+Relax the rules for this one point only:
 
-- **製品の外に出る手順は残す** — 外部サービスの管理画面での操作、OAuth の認証フロー。製品をいくら触っても学べない。
-- **製品自身の UI をなぞる手順は、ここでも消す** — 「ボタンを押す → 画面が開く → 待つ」型。
+- **Keep steps that leave the product** — actions in an external service's console, OAuth authorization flows. No amount of using the product teaches these.
+- **Still delete steps that trace the product's own UI** — the "click a button → a screen opens → wait" kind.
 
-## 検証
+## Verification
 
-- 消した節へのアンカーリンクが他ページに残っていないか
-- 参照先ページを非公開にした結果、行き先のない誘導が残っていないか
-- リンク切れ検査があるなら実行する
+- Check that no other page still links to an anchor in a deleted section
+- Check that hiding a page did not leave dangling "see this page" pointers
+- Run the link checker if the project has one
 
-## 実例
+## Examples
 
-架空の題材で before / after を収めている。判断に迷ったら見比べる。
+Before/after pairs on a fictional product. Compare them when a call is hard to make.
 
-- [examples/01-settings-page.md](examples/01-settings-page.md) — 設定画面のページを削ぐ(足切り・同語反復・画面描写)
-- [examples/02-error-table.md](examples/02-error-table.md) — エラー一覧を残し、対処を具体的にする(単票か全体か)
+- [examples/01-settings-page.md](examples/01-settings-page.md) — trimming a settings page (the cutoff, tautologies, describing the screen)
+- [examples/02-error-table.md](examples/02-error-table.md) — keeping an error list and making its remedies specific (whole set vs. single case)
